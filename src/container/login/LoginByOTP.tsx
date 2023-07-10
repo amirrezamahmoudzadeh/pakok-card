@@ -1,3 +1,4 @@
+import TimeCounter from "@/components/TimeCounter";
 import {
   Box,
   Button,
@@ -37,8 +38,10 @@ const LoginByOTP = () => {
 
   const handleSubmitForm = (values: FormValues) => {
     console.log(values);
-    setstepOneIsDone(true)
+    setstepOneIsDone(true);
   };
+
+  const [caneResendNumber, setCaneResendNumber] = useState(false);
 
   return (
     <>
@@ -52,7 +55,9 @@ const LoginByOTP = () => {
             <form onSubmit={handleSubmit}>
               <VStack>
                 <FormControl
-                  isInvalid={!!errors.mobileNumberOTP && touched.mobileNumberOTP}
+                  isInvalid={
+                    !!errors.mobileNumberOTP && touched.mobileNumberOTP
+                  }
                 >
                   <FormLabel htmlFor="mobileNumberOTP">
                     <Box as={"span"} color={"red.500"} ml={1}>
@@ -95,9 +100,23 @@ const LoginByOTP = () => {
             >
               بازگشت
             </Button>
-            <Button colorScheme="blue" variant={"outline"}>
-              ارسال مجدد
-            </Button>
+            <HStack>
+              <Button
+                colorScheme="blue"
+                variant={"outline"}
+                isLoading={!caneResendNumber}
+                loadingText="ارسال مجدد"
+                spinner={
+                  <TimeCounter
+                    endSeconds={0}
+                    startSeconds={20}
+                    onEndTime={() => setCaneResendNumber(true)}
+                  />
+                }
+              >
+                ارسال مجدد
+              </Button>
+            </HStack>
             <Button colorScheme="blue">ورود</Button>
           </HStack>
         </VStack>

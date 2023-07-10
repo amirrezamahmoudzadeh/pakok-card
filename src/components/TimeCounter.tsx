@@ -1,3 +1,4 @@
+import { Box } from "@chakra-ui/react";
 import { FC, useEffect, useState } from "react";
 
 type Props = {
@@ -25,7 +26,7 @@ const TimeCounter: FC<Props> = ({ startSeconds, endSeconds, onEndTime }) => {
     };
   }, [currentTime, endSeconds, onEndTime]);
 
-  return <div>{currentTime > 0 ? currentTime : ""}</div>;
+  return <Box color={"blue.500"}>{currentTime > 0 ? currentTime : ""}</Box>;
 };
 
 export default TimeCounter;
