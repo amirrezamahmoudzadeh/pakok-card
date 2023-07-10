@@ -1,29 +1,23 @@
 "use client";
-import PasswordInput from "@/components/PasswordInput";
 import {
-  Box,
   Button,
   Card,
   Center,
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  HStack,
-  Input,
   Tab,
   TabList,
   TabPanel,
   TabPanels,
   Tabs,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useState } from "react";
 import bg from "../../../public/login-background.png";
-import LoginWithOTP from "./LoginWithOTP";
+import LoginByOTP from "./LoginByOTP";
+import LoginByPasword from "./LoginByPasword";
 
-const setTabPanelDetails = (type: 1 | 2) => {
+export const setTabPanelDetails = (type: 1 | 2) => {
   if (type === 1) {
     return {
       tabTilte: "ورود با نام کاربری",
@@ -39,6 +33,7 @@ const setTabPanelDetails = (type: 1 | 2) => {
 
 const LoginPage: NextPage = () => {
   const [tabPanelType, setTabPaneType] = useState<1 | 2>(1);
+
   return (
     <VStack
       height={"100vh"}
@@ -68,40 +63,13 @@ const LoginPage: NextPage = () => {
 
           <TabPanels>
             <TabPanel p={3}>
-              <VStack gap={4}>
-                <FormControl>
-                  <FormLabel>
-                    <Box as={"span"} color={"red.500"} ml={1}>
-                      *
-                    </Box>
-                    شماره موبایل
-                  </FormLabel>
-                  <Input type="tel" />
-                  <FormHelperText></FormHelperText>
-                </FormControl>
-                <PasswordInput formLabel="کلمه عبور" />
-                {tabPanelType === 2 && (
-                  <PasswordInput formLabel="تکرار کلمه عبور" />
-                )}
-                <HStack w={"full"} justifyContent={"space-between"}>
-                  <Button
-                    onClick={() => {
-                      if (tabPanelType === 1) {
-                        setTabPaneType(2);
-                      } else {
-                        setTabPaneType(1);
-                      }
-                    }}
-                    colorScheme="green"
-                  >
-                    {setTabPanelDetails(tabPanelType).buttonTitle}
-                  </Button>
-                  <Button colorScheme="blue">ارسال</Button>
-                </HStack>
-              </VStack>
+              <LoginByPasword
+                setTabPaneType={setTabPaneType}
+                tabPanelType={tabPanelType}
+              />
             </TabPanel>
             <TabPanel p={3}>
-              <LoginWithOTP />
+              <LoginByOTP />
             </TabPanel>
           </TabPanels>
         </Tabs>

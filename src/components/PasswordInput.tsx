@@ -1,31 +1,48 @@
 "use client";
 import {
+  Box,
   Button,
   FormControl,
-  FormHelperText,
+  FormErrorMessage,
   FormLabel,
   Input,
   InputGroup,
   InputLeftElement,
-  Box
 } from "@chakra-ui/react";
-import React, { FC, useState } from "react";
+import { Field } from "formik";
+import { FC, useState } from "react";
 
 interface Props {
+  isInvalid?: boolean;
   formLabel: string;
+  id: string;
+  errorMassage?: string;
 }
 
-const PasswordInput: FC<Props> = ({ formLabel }) => {
+const PasswordInput: FC<Props> = ({
+  formLabel,
+  id,
+  errorMassage,
+  isInvalid,
+}) => {
   const [showPass, setShowPass] = useState(false);
 
   return (
-    <FormControl>
-      <FormLabel>
-        <Box as={"span"} color={'red.500'} ml={1} >*</Box>
+    <FormControl isInvalid={isInvalid}>
+      <FormLabel htmlFor={id}>
+        <Box as={"span"} color={"red.500"} ml={1}>
+          *
+        </Box>
         {formLabel}
       </FormLabel>
       <InputGroup>
-        <Input type={showPass ? "text" : "password"} pr={4} />
+        <Field
+          as={Input}
+          type={showPass ? "text" : "password"}
+          pr={4}
+          id={id}
+          name={id}
+        />
         <InputLeftElement>
           <Button
             size="sm"
@@ -63,7 +80,7 @@ const PasswordInput: FC<Props> = ({ formLabel }) => {
           </Button>
         </InputLeftElement>
       </InputGroup>
-      <FormHelperText></FormHelperText>
+      <FormErrorMessage>{errorMassage}</FormErrorMessage>
     </FormControl>
   );
 };
